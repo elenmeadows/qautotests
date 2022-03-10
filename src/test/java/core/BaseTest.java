@@ -6,6 +6,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 
+import static com.codeborne.selenide.FileDownloadMode.PROXY;
+
 abstract public class BaseTest {
 
     public void setUp() {
@@ -14,8 +16,9 @@ abstract public class BaseTest {
         Configuration.driverManagerEnabled = true;
         Configuration.browserSize = "1920x1080";
         Configuration.headless = false;
+        Configuration.downloadsFolder = "C:/Downloads";
 //        Configuration.pageLoadTimeout = 5000;
-        Configuration.pageLoadStrategy = "eager";
+//        Configuration.pageLoadStrategy = "eager";
     }
 
     @Before
