@@ -16,7 +16,6 @@ abstract public class BaseTest {
         Configuration.driverManagerEnabled = true;
         Configuration.browserSize = "1920x1080";
         Configuration.headless = false;
-        Configuration.downloadsFolder = "C:/Downloads";
 //        Configuration.pageLoadTimeout = 5000;
 //        Configuration.pageLoadStrategy = "eager";
     }

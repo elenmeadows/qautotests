@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.files.FileFilters.withExtension;
 
 public class SignUpTest extends BaseTest {
     private final SelenideElement signUpButton = $x("//a[@data-link-id='globalnav_signup_button']");
@@ -27,11 +28,11 @@ public class SignUpTest extends BaseTest {
     SelenideElement audioButton = $x("//iframe[starts-with(@name, 'c-') and starts-with(@src, 'https://www.google.com/recaptcha')]");
     SelenideElement downloadAudio = $x("//a[@class='rc-audiochallenge-tdownload-link']");
     SelenideElement uploadAudio = $x("//input[@type='file']");
+    SelenideElement audioResponse = $x("//input[@id='audio-response']");
 
     @Test
     public void signUp() throws InterruptedException, FileNotFoundException {
         Selenide.open(ConfigProvider.MAIN_PAGE);
-
         signUpButton.click();
         Thread.sleep(10000);
         firstName.sendKeys(ConfigProvider.FIRST_NAME);
@@ -47,17 +48,21 @@ public class SignUpTest extends BaseTest {
         $("div.button-holder.audio-button-holder").click();
         switchTo().defaultContent();
         switchTo().frame(audioButton);
-        downloadAudio.download();
+        File file = downloadAudio.download();
 
         Selenide.executeJavaScript("window.open();");
         Selenide.switchTo().window(1);
         Selenide.open(ConfigProvider.SPEECH_TEXT);
         Thread.sleep(2000);
-        uploadAudio.uploadFile(new File("C:/Downloads/../audio.mp3"));
+        uploadAudio.uploadFile(file);
         Thread.sleep(7000);
         String result = $("div.tab-panels--tab-content").getText();
         System.out.println(result);
+
         Selenide.switchTo().window(0);
+        switchTo().defaultContent();
+        switchTo().frame(audioButton);
+        audioResponse.sendKeys(result, Keys.ENTER);
 
         Thread.sleep(10000);
         int one = 1;
