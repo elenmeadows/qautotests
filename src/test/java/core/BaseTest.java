@@ -27,3 +27,4 @@ abstract public class BaseTest {
         Selenide.closeWebDriver();
     }
 }
+

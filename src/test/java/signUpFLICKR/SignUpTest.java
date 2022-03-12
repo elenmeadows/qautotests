@@ -71,6 +71,5 @@ public class SignUpTest extends BaseTest {
         }
 
         Thread.sleep(8000);
-        int one = 1;
     }
 }
